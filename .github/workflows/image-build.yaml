@@ -1,0 +1,47 @@
+name: Image Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+      - 'release-*'
+    tags:
+      - 'v*'
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  tag: ${{ github.ref == 'refs/heads/main' && 'latest' || github.ref_name }}
+
+jobs:
+  image-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build
+        run: |
+          yarn tsc
+          yarn build:all
+      - name: Image creation
+        run: |
+          yarn build-image
+          docker tag backstage ${{ github.repository_owner }}/backstage:${{ env.tag }}
+
+      - name: Push To Registry
+        uses: redhat-actions/push-to-registry@v2
+        id: push
+        with:
+          image: ${{ github.repository_owner }}/backstage
+          tags: ${{ env.tag }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io

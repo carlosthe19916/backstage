@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
-      - "release-*"
+      - 'release-*'
   pull_request:
     branches:
       - main
-      - "release-*"
+      - 'release-*'
 
 jobs:
   ci:
@@ -24,6 +24,8 @@ jobs:
       - name: Install
         run: yarn install --frozen-lockfile
       - name: Build
-        run: yarn build:all
+        run: |
+          yarn tsc
+          yarn build:all
       - name: Test
         run: yarn test --watchAll=false
