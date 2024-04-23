@@ -24,6 +24,6 @@ jobs:
       - name: Install
         run: yarn install --frozen-lockfile
       - name: Build
-        run: npm run build
+        run: yarn build:all
       - name: Test
         run: yarn test --watchAll=false
