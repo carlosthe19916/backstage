@@ -21,8 +21,12 @@ yarn install
 yarn dev
 ```
 
+Open your browser at http://localhost:3000
+
 ## Production mode
 
 ```shell
 docker-compose -f deploy/compose/compose.yaml up
 ```
+
+Open your browser at http://localhost:7007
