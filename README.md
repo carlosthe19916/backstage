@@ -8,3 +8,9 @@ To start the app, run:
 yarn install
 yarn dev
 ```
+
+## Production mode
+
+```shell
+docker-compose -f deploy/compose/compose.yaml up
+```
