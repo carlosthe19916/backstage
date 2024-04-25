@@ -1,0 +1,29 @@
+version: '3'
+services:
+  database:
+    image: docker.io/library/postgres:16
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: backstage
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U user -d backstage']
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+  backstage:
+    image: ghcr.io/carlosthe19916/backstage:latest
+    ports:
+      - 7007:7007
+    environment:
+      POSTGRES_HOST: database
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      BACKEND_SECRET: xiaXDwU++YmGzvIdQ/g3pJti7hM2j2CS
+    depends_on:
+      database:
+        condition: service_healthy
