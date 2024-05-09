@@ -19,8 +19,8 @@ services:
     ports:
       - 7007:7007
     environment:
-      POSTGRES_SERVICE_HOST: database
-      POSTGRES_SERVICE_PORT: 5432
+      POSTGRES_HOST: database
+      POSTGRES_PORT: 5432
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       BACKEND_SECRET: xiaXDwU++YmGzvIdQ/g3pJti7hM2j2CS
