@@ -25,8 +25,38 @@ Open your browser at http://localhost:3000
 
 ## Production mode
 
+### Docker Compose
+
 ```shell
 docker-compose -f deploy/compose/compose.yaml up
 ```
 
 Open your browser at http://localhost:7007
+
+### Helm Chart
+
+Requisites:
+
+- A running instance of Kubernetes. E.g. [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+- Helm. [Installing Helm](https://helm.sh/docs/intro/install/)
+
+The following instruction were inspired by [backstage-charts](https://github.com/backstage/charts/tree/main/charts/backstage)
+
+- Add helm repos:
+
+```shell
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo add backstage https://backstage.github.io/charts
+```
+
+- Instantiate backstage:
+
+```shell
+helm install my-release backstage/backstage -f deploy/k8s/chart/values.yaml
+```
+
+- To uninstall backend run:
+
+```shell
+helm uninstall my-release
+```
