@@ -8,7 +8,7 @@ backend:
   # information on the format
   auth:
     keys:
-      - secret: ${BACKEND_SECRET}
+      - secret: xiaXDwU++YmGzvIdQ/g3pJti7hM2j2CS
     # externalAccess:
     #   - type: legacy
     #     options:
