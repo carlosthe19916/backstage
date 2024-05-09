@@ -7,17 +7,17 @@ backend:
   # See https://backstage.io/docs/auth/service-to-service-auth for
   # information on the format
   auth:
-    externalAccess:
-      - type: legacy
-        options:
-          secret: ${BACKEND_SECRET}
-          subject: legacy-catalog
-      - type: legacy
-        options:
-          secret: ${BACKEND_SECRET}
-          subject: legacy-scaffolder
     keys:
       - secret: ${BACKEND_SECRET}
+    # externalAccess:
+    #   - type: legacy
+    #     options:
+    #       secret: ${BACKEND_SECRET}
+    #       subject: legacy-catalog
+    #   - type: legacy
+    #     options:
+    #       secret: ${BACKEND_SECRET}
+    #       subject: legacy-scaffolder
   # Note that the baseUrl should be the URL that the browser and other clients
   # should use when communicating with the backend, i.e. it needs to be
   # reachable not just from within the backend host, but from all of your
