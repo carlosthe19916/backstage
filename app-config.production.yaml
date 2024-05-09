@@ -16,6 +16,8 @@ backend:
         options:
           secret: ${BACKEND_SECRET}
           subject: legacy-scaffolder
+    keys:
+      - secret: ${BACKEND_SECRET}
   # Note that the baseUrl should be the URL that the browser and other clients
   # should use when communicating with the backend, i.e. it needs to be
   # reachable not just from within the backend host, but from all of your
