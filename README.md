@@ -55,6 +55,12 @@ helm repo add backstage https://backstage.github.io/charts
 helm install my-release backstage/backstage -f deploy/k8s/chart/values.yaml
 ```
 
+- Wait until the database and backstage start. You can access to backstage with:
+
+```shell
+kubectl port-forward service/my-release-backstage 7007:7007
+```
+
 - To uninstall backend run:
 
 ```shell
