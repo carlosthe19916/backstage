@@ -1,0 +1,27 @@
+services:
+  app:
+    image: mcr.microsoft.com/devcontainers/base:bullseye
+    volumes:
+      - ../..:/workspaces:cached
+    command: sleep infinity
+    networks:
+      - backstage
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: example
+    networks:
+      - backstage
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    networks:
+      - backstage
+
+networks:
+  backstage: {}

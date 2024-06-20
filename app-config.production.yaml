@@ -3,19 +3,6 @@ app:
   baseUrl: http://localhost:7007
 
 backend:
-  # Used for enabling authentication, secret is shared by all backend plugins
-  # See https://backstage.io/docs/auth/service-to-service-auth for
-  # information on the format
-  auth:
-    externalAccess:
-      - type: legacy
-        options:
-          secret: ${BACKEND_SECRET}
-          subject: legacy-catalog
-      - type: legacy
-        options:
-          secret: ${BACKEND_SECRET}
-          subject: legacy-scaffolder
   # Note that the baseUrl should be the URL that the browser and other clients
   # should use when communicating with the backend, i.e. it needs to be
   # reachable not just from within the backend host, but from all of your
@@ -44,8 +31,7 @@ backend:
 
 auth:
   providers:
-    guest:
-      dangerouslyAllowOutsideDevelopment: true
+    guest: null
 
 catalog:
   # Overrides the default list locations from app-config.yaml as these contain example data.
