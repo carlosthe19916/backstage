@@ -42,6 +42,18 @@ Requisites:
 
 The following instruction were inspired by [backstage-charts](https://github.com/backstage/charts/tree/main/charts/backstage)
 
+- Create configuration:
+
+```shell
+kubectl create -f deploy/k8s/chart/config-map.yaml
+```
+
+- Create secrets (manually edit it before creating it):
+
+```shell
+kubectl create -f deploy/k8s/chart/secret.yaml
+```
+
 - Add helm repos:
 
 ```shell

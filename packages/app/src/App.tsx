@@ -67,15 +67,15 @@ const app = createApp({
           {
             id: 'github-auth-provider',
             title: 'Github',
-            message: 'Sign in using GIthub',
+            message: 'Sign in using Github',
             apiRef: githubAuthApiRef,
           },
-          {
-            id: 'gitlab-auth-provider',
-            title: 'Gitlab',
-            message: 'Sign in using Gitlab',
-            apiRef: gitlabAuthApiRef,
-          },
+          // {
+          //   id: 'gitlab-auth-provider',
+          //   title: 'Gitlab',
+          //   message: 'Sign in using Gitlab',
+          //   apiRef: gitlabAuthApiRef,
+          // },
         ]}
       />
     ),

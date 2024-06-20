@@ -38,11 +38,16 @@ backend.add(
 );
 
 backend.add(import('@backstage/plugin-events-backend/alpha'));
-backend.add(eventsModuleGithubEventRouter());
-backend.add(eventsModuleGitlabEventRouter());
-backend.add(eventsModuleGithubWebhook());
-backend.add(eventsModuleGitlabWebhook());
+// backend.add(eventsModuleGithubEventRouter());
+// backend.add(eventsModuleGitlabEventRouter());
+// backend.add(eventsModuleGithubWebhook());
+// backend.add(eventsModuleGitlabWebhook());
 
+// org/user import
+backend.add(import('@backstage/plugin-catalog-backend-module-github-org'));
+backend.add(import('@backstage/plugin-catalog-backend-module-gitlab-org'));
+
+// repo discovery
 backend.add(import('@backstage/plugin-catalog-backend-module-gitlab/alpha'));
 backend.add(import('@backstage/plugin-catalog-backend-module-github/alpha'));
 
@@ -56,5 +61,9 @@ backend.add(
 backend.add(import('@backstage/plugin-search-backend/alpha'));
 backend.add(import('@backstage/plugin-search-backend-module-catalog/alpha'));
 backend.add(import('@backstage/plugin-search-backend-module-techdocs/alpha'));
+
+// integrations.[github.gitlab]
+backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));
+backend.add(import('@backstage/plugin-scaffolder-backend-module-gitlab'));
 
 backend.start();
