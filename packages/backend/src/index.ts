@@ -7,14 +7,14 @@
  */
 
 import { createBackend } from '@backstage/backend-defaults';
-import {
-  eventsModuleGithubEventRouter,
-  eventsModuleGithubWebhook,
-} from '@backstage/plugin-events-backend-module-github/alpha';
-import {
-  eventsModuleGitlabEventRouter,
-  eventsModuleGitlabWebhook,
-} from '@backstage/plugin-events-backend-module-gitlab/alpha';
+// import {
+//   eventsModuleGithubEventRouter,
+//   eventsModuleGithubWebhook,
+// } from '@backstage/plugin-events-backend-module-github/alpha';
+// import {
+//   eventsModuleGitlabEventRouter,
+//   eventsModuleGitlabWebhook,
+// } from '@backstage/plugin-events-backend-module-gitlab/alpha';
 
 const backend = createBackend();
 
