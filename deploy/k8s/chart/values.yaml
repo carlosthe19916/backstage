@@ -1,6 +1,6 @@
 backstage:
   image:
-    registry: quay.io
+    registry: ghcr.io
     repository: carlosthe19916/backstage
     tag: latest
     pullPolicy: Always
