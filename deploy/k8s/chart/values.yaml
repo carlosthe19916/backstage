@@ -1,5 +1,6 @@
 backstage:
   image:
+    registry: ghcr.io
     repository: carlosthe19916/backstage
     tag: latest
     pullPolicy: Always
@@ -10,8 +11,10 @@ backstage:
     - app-config.yaml
     - --config
     - app-config.production.yaml
-  extraEnvVars:
-    - name: BACKEND_SECRET
-      value: "xiaXDwU++YmGzvIdQ/g3pJti7hM2j2CS"
+  extraAppConfig:    
+    - filename: config-map.prod.yaml
+      configMapRef: backstage-configmap
+  extraEnvVarsSecrets:
+    - backstage-secrets
 postgresql:
   enabled: true

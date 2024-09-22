@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backstage-configmap
+data:
+  config-map.prod.yaml: |
+    auth:
+      providers:
+        github:
+          development:
+            clientId: ${AUTH_GITHUB_CLIENT_ID}
+            clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+            signIn:
+              resolvers:
+                - resolver: usernameMatchingUserEntityName
+
+    integrations:
+      github:
+        - host: github.com
+          token: ${GITHUB_TOKEN}
+
+    catalog:
+      providers:
+        githubOrg:
+          id: scaffolder
+          orgs:
+            - backstage-collection
+          githubUrl: https://github.com
+          schedule:
+            frequency: { minutes: 60 }
+            timeout: { minutes: 3 }
+        github:
+          personalAccount:
+            organization: backstage-collection
+            catalogPath: "./catalog-info.yaml"
+            schedule:
+              frequency: { minutes: 60 }
+              timeout: { minutes: 3 }
+
+    scaffolder:
+      defaultAuthor:
+        email: "carlosthe19916@gmail.com"
+        name: "Carlos Feria"
+      defaultCommitMessage: "init template"
