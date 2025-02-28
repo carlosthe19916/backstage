@@ -1,0 +1,25 @@
+{
+  "name": "backstage",
+  "dockerComposeFile": "./docker-compose.yml",
+  "overrideCommand": true,
+  "shutdownAction": "stopCompose",
+  "service": "backstage",
+  "workspaceFolder": "/workspace",
+  "remoteUser": "vscode",
+  "forwardPorts": [3000, 7007, 8080, 9090],
+  "onCreateCommand": "curl -s https://raw.githubusercontent.com/devcontainers/features/refs/heads/main/src/node/install.sh | sudo VERSION=22 bash",
+  "postStartCommand": "echo \"source /usr/share/bash-completion/completions/git\" >> ~/.bashrc",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "k--kato.intellij-idea-keybindings",
+        "vadimcn.vscode-lldb",
+        "dsznajder.es7-react-js-snippets",
+        "github.vscode-pull-request-github",
+        "GitHub.github-vscode-theme",
+        "esbenp.prettier-vscode",
+        "oderwat.indent-rainbow"
+      ]
+    }
+  }
+}

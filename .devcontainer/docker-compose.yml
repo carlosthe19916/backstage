@@ -1,0 +1,99 @@
+networks:
+  backstage:
+
+volumes:
+  npm-cache:
+  backstage-postgres-data:
+  backstage-postgres-ui-data:
+
+services:
+  backstage:
+    image: localhost/backstage_devcontainer-backstage:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        USER_UID: ${USER_UID}
+    privileged: true
+    userns_mode: "keep-id"
+    command: tail -f /dev/null
+    volumes:
+      - ../:/workspace:cached
+      - npm-cache:/home/vscode/.npm
+    env_file:
+      - .env_db
+    environment:
+      # Auth secret
+      SESSION_SECRET: xiaXDwU++YmGzvIdQ/g3pJti7hM2j2CS
+      # Postgres
+      POSTGRES_HOST: backstage-db
+      # Keycloak
+      KEYCLOAK_HOST: http://backstage-keycloak:8080
+      KEYCLOAK_REALM: myrealm
+      AUTH_CLIENT_ID: backstage-auth
+      AUTH_CLIENT_SECRET: secret
+      CATALOG_KEYCLOAK_CLIENT_ID: backstage-catalog
+      CATALOG_KEYCLOAK_CLIENT_SECRET: secret
+    networks:
+      - backstage
+
+  backstage-db:
+    image: postgres:16
+    restart: unless-stopped
+    volumes:
+      - backstage-postgres-data:/var/lib/postgresql/data
+    env_file:
+      - .env_db
+    networks:
+      - backstage
+
+  backstage-db-ui:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    volumes:
+      - backstage-postgres-ui-data:/var/lib/pgadmin
+    ports:
+      - "8080:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: your_email@example.com
+      PGADMIN_DEFAULT_PASSWORD: your_password
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    networks:
+      - backstage
+
+  backstage-keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: true
+      KC_HOSTNAME: http://localhost:9090
+    ports:
+      - "9090:8080"
+    command: [ "start-dev" ]
+    networks:
+      - backstage
+
+  backstage-keycloak-wait:
+    image: docker.io/alpine/curl:latest
+    volumes:
+      - ./kc-wait.sh:/tmp/kc-wait.sh:Z
+    entrypoint: [ "/bin/sh" ]
+    command: /tmp/kc-wait.sh
+    depends_on:
+      backstage-keycloak:
+        condition: service_started
+    networks:
+      - backstage
+
+  backstage-keycloak-init:
+    image: quay.io/keycloak/keycloak:latest
+    volumes:
+      - ./kc-init.sh:/tmp/kc-init.sh:Z
+    entrypoint: [ "/bin/sh" ]
+    command: /tmp/kc-init.sh
+    depends_on:
+      backstage-keycloak-wait:
+        condition: service_completed_successfully
+    networks:
+      - backstage
