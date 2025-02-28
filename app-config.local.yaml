@@ -1,0 +1,38 @@
+# Backstage override configuration for your local development environment
+backend:
+  database:
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: ${POSTGRES_PORT}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+
+auth:
+  environment: development
+  session:
+    secret: ${SESSION_SECRET}
+  providers:
+    keycloak:
+      development:
+        metadataUrl: ${KEYCLOAK_HOST}/realms/${KEYCLOAK_REALM}/.well-known/openid-configuration
+        clientId: ${AUTH_CLIENT_ID}
+        clientSecret: ${AUTH_CLIENT_SECRET}
+        prompt: auto
+
+catalog:
+  # Required to overwrite app-config.yaml so we don't import anything
+  locations: []
+  providers:
+    keycloakOrg:
+      default:
+        baseUrl: ${KEYCLOAK_HOST}
+        realm: ${KEYCLOAK_REALM}
+        loginRealm: ${KEYCLOAK_REALM}
+        clientId: ${CATALOG_KEYCLOAK_CLIENT_ID}
+        clientSecret: ${CATALOG_KEYCLOAK_CLIENT_SECRET}
+        schedule: # Optional (defaults to the configurations below if not provided); same options as in TaskScheduleDefinition
+          # supports cron, ISO duration, "human duration" as used in code
+          frequency: { minutes: 30 } # Customize this to fit your needs
+          # supports ISO duration, "human duration" as used in code
+          timeout: { minutes: 3 } # Customize this to fit your needs
